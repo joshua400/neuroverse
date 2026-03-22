@@ -17,7 +17,8 @@
     "dev": "tsx watch src/index.ts",
     "build": "tsc",
     "clean": "rimraf dist",
-    "prepublishOnly": "npm run build"
+    "prepublishOnly": "npm run build",
+    "test": "tsc --noEmit"
   },
   "keywords": [
     "mcp",
