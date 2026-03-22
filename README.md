@@ -11,6 +11,10 @@
 <h1 align="center">🧠 NeuroVerse</h1>
 
 <p align="center">
+  <strong>📦 <a href="https://www.npmjs.com/package/neuroverse">Install from npm</a></strong> | <strong>🐙 <a href="https://github.com/joshua400/neuroverse">GitHub Repository</a></strong>
+</p>
+
+<p align="center">
   <strong>Your AI agent only speaks English. NeuroVerse fixes that.</strong><br/>
   <strong>Your AI agent forgets everything. NeuroVerse remembers.</strong><br/>
   <strong>Your AI agent might do something dangerous. NeuroVerse stops that.</strong><br/>
