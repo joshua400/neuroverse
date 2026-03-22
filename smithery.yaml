@@ -1,0 +1,21 @@
+buildCommands:
+  - cd npm && npm install && npm run build
+startCommand:
+  type: stdio
+  configSchema:
+    type: object
+    required:
+      - OPENAI_API_KEY
+    properties:
+      OPENAI_API_KEY:
+        type: string
+        description: Your OpenAI API key (Required for embeddings and routing)
+      REDIS_URL:
+        type: string
+        description: Optional Redis connection string for scaled caching
+  command: node
+  args:
+    - npm/dist/index.js
+  env:
+    OPENAI_API_KEY: "{{OPENAI_API_KEY}}"
+    REDIS_URL: "{{REDIS_URL}}"
