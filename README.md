@@ -8,6 +8,18 @@
   <img src="https://img.shields.io/badge/npm-neuroverse-CB3837?style=for-the-badge&logo=npm&logoColor=white" alt="npm" />
 </p>
 
+<p align="center">
+  <a href="https://glama.ai/mcp/servers/joshua400/neuroverse">
+    <img src="https://glama.ai/mcp/servers/joshua400/neuroverse/badges/card.svg" alt="NeuroVerse MCP Server Card" />
+  </a>
+</p>
+
+<p align="center">
+  <a href="https://glama.ai/mcp/servers/joshua400/neuroverse">
+    <img src="https://glama.ai/mcp/servers/joshua400/neuroverse/badges/score.svg" alt="NeuroVerse MCP Server Score" />
+  </a>
+</p>
+
 <h1 align="center">🧠 NeuroVerse</h1>
 
 <p align="center">
