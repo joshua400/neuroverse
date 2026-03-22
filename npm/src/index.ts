@@ -50,7 +50,7 @@ if (process.env["SAFETY_STRICT_MODE"] === "true") {
 
 const server = new McpServer({
   name: "neuroverse-mcp-server",
-  version: "1.0.0",
+  version: "4.1.1",
 });
 
 // ─── Tool 1: neuroverse_process ─────────────────────────────────────────
