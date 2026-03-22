@@ -1,11 +1,14 @@
 {
+  "$schema": "https://glama.ai/mcp/schemas/server.json",
+  "maintainers": [
+    "joshua400"
+  ],
   "name": "NeuroVerse",
   "version": "4.1.1",
   "description": "Multilingual intelligence + memory + safety MCP server for autonomous AI agents. Features Whisper STT, Coqui TTS, Redis caching, and OpenRouter reasoning.",
   "license": "Apache-2.0",
   "author": "Joshua Ragiland M",
   "homepage": "https://github.com/joshua400/neuroverse",
-  "repository": "https://github.com/joshua400/neuroverse",
   "keywords": [
     "mcp",
     "multilingual",
@@ -16,11 +19,6 @@
   ],
   "language": "TypeScript",
   "runtime": "Node.js",
-  "capabilities": {
-    "prompts": true,
-    "resources": true,
-    "tools": true
-  },
   "build": {
     "steps": [
       "cd npm && npm install && npm run build"
