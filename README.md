@@ -80,7 +80,7 @@ npm install neuroverse
 
 **Option B: From source (Python)**
 ```bash
-git clone https://github.com/JoshuaRagilandM/neuroverse.git
+git clone https://github.com/joshua400/neuroverse.git
 cd neuroverse
 python -m pip install -e ".[dev]"
 ```
