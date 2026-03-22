@@ -1,7 +1,7 @@
 {
   "name": "neuroverse",
-  "version": "4.0.0",
-  "description": "India-first multilingual intelligence + memory + safety MCP server for autonomous AI agents",
+  "version": "4.0.1",
+  "description": "Multilingual intelligence + memory + safety MCP server for autonomous AI agents",
   "type": "module",
   "main": "dist/index.js",
   "bin": {

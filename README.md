@@ -22,7 +22,7 @@
 </p>
 
 <p align="center">
-  <em>India-first multilingual intelligence + memory + safety + voice layer for autonomous AI agents.</em>
+  <em>Multilingual intelligence + memory + safety + voice layer for autonomous AI agents.</em>
 </p>
 
 ---
