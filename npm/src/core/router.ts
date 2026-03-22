@@ -9,6 +9,7 @@
  */
 
 import axios from "axios";
+import { OpenRouter } from "@openrouter/sdk";
 import { ModelProvider, TaskType } from "../types.js";
 import type { ModelRoutingDecision, LLMCall } from "../types.js";
 
@@ -18,6 +19,7 @@ interface RouterConfig {
   openaiApiKey?: string;
   anthropicApiKey?: string;
   sarvamApiKey?: string;
+  openrouterApiKey?: string;
   ollamaBaseUrl: string;
 }
 
@@ -36,6 +38,7 @@ const DEFAULT_MODELS: Record<ModelProvider, string> = {
   [ModelProvider.ANTHROPIC]: "claude-sonnet-4-20250514",
   [ModelProvider.OLLAMA]: "llama3",
   [ModelProvider.SARVAM]: "sarvam-2b-v0.5",
+  [ModelProvider.OPENROUTER]: "stepfun/step-3.5-flash:free",
 };
 
 // ─── Routing logic ──────────────────────────────────────────────────────
@@ -53,6 +56,13 @@ export function routeTask(taskType: TaskType): ModelRoutingDecision {
   }
 
   if (taskType === TaskType.REASONING) {
+    if (config.openrouterApiKey) {
+      return {
+        provider: ModelProvider.OPENROUTER,
+        modelName: DEFAULT_MODELS[ModelProvider.OPENROUTER],
+        reason: "Reasoning task — routing to OpenRouter for specialized reasoning model.",
+      };
+    }
     if (config.anthropicApiKey) {
       return {
         provider: ModelProvider.ANTHROPIC,
@@ -82,6 +92,9 @@ export function routeTask(taskType: TaskType): ModelRoutingDecision {
 }
 
 function fallbackDecision(reason: string): ModelRoutingDecision {
+  if (config.openrouterApiKey) {
+    return { provider: ModelProvider.OPENROUTER, modelName: DEFAULT_MODELS[ModelProvider.OPENROUTER], reason };
+  }
   if (config.openaiApiKey) {
     return { provider: ModelProvider.OPENAI, modelName: DEFAULT_MODELS[ModelProvider.OPENAI], reason };
   }
@@ -112,6 +125,8 @@ async function dispatch(prompt: string, decision: ModelRoutingDecision): Promise
       return callSarvam(prompt, decision.modelName);
     case ModelProvider.OLLAMA:
       return callOllama(prompt, decision.modelName);
+    case ModelProvider.OPENROUTER:
+      return callOpenRouter(prompt, decision.modelName);
     default:
       throw new Error(`Unknown provider: ${decision.provider}`);
   }
@@ -158,4 +173,25 @@ async function callOllama(prompt: string, model: string): Promise<string> {
     { timeout: 120000 }
   );
   return resp.data.response ?? "";
+}
+
+async function callOpenRouter(prompt: string, model: string): Promise<string> {
+  const or = new OpenRouter({ apiKey: config.openrouterApiKey ?? "" });
+
+  const response = await or.chat.send({
+    chatGenerationParams: {
+      model,
+      messages: [{ role: "user", content: prompt }],
+    },
+  });
+
+  const content = response.choices[0]?.message?.content ?? "";
+
+  // Log reasoning tokens to stderr so the user can see them in MCP logs
+  const reasoningTokens = response.usage?.completionTokensDetails?.reasoningTokens;
+  if (reasoningTokens) {
+    console.error(`[OpenRouter] Reasoning tokens: ${reasoningTokens}`);
+  }
+
+  return content;
 }

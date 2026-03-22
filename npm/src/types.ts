@@ -29,6 +29,7 @@ export enum ModelProvider {
   ANTHROPIC = "anthropic",
   OLLAMA = "ollama",
   SARVAM = "sarvam",
+  OPENROUTER = "openrouter",
 }
 
 // ─── Interfaces ─────────────────────────────────────────────────────────

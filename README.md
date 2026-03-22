@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="https://img.shields.io/badge/NeuroVerse-v2.0.0-blueviolet?style=for-the-badge" alt="version" />
+  <img src="https://img.shields.io/badge/NeuroVerse-v4.1.0-blueviolet?style=for-the-badge" alt="version" />
   <img src="https://img.shields.io/badge/Node.js-18+-339933?style=for-the-badge&logo=node.js&logoColor=white" alt="node" />
   <img src="https://img.shields.io/badge/Python-3.10+-blue?style=for-the-badge&logo=python&logoColor=white" alt="python" />
   <img src="https://img.shields.io/badge/License-Apache--2.0-green?style=for-the-badge" alt="license" />
@@ -27,9 +27,10 @@
 
 ---
 
-## 🚀 What's New in v2.0
-- **New Indian Languages**: Added full keyword & trigram support for **Kannada**, **Malayalam**, and **Bengali**. NeuroVerse now understands 6 Indian languages + English natively.
-- **Voice Layer**: Built-in support for **Whisper STT** and **Coqui TTS**. Give your agents ears and a voice with the new `neuroverse_transcribe` and `neuroverse_synthesize` tools.
+## 🚀 What's New in v4.1
+- **OpenRouter Reasoning**: Integrated the `stepfun/step-3.5-flash:free` model for high-performance analytical tasks. Use the new `neuroverse_reason` tool for deep thinking.
+- **Reasoning Tokens**: Real-time tracking of reasoning tokens for every request.
+- **Voice Layer (v2.0)**: Built-in support for **Whisper STT** and **Coqui TTS**.
 
 ---
 
@@ -44,7 +45,7 @@ Every time you start a new chat with Cursor, VS Code Copilot, or any MCP-compati
 | 🧠 | **Intent Extraction** | LLM-first structured intent extraction with deterministic rule-based fallback. Never misses a command. |
 | 💾 | **Tiered Memory** | Short-term (session), Episodic (recent), Semantic (long-term facts) — all with importance scoring. |
 | 🛡️ | **3-Layer Safety (Kavach)** | Keyword blocklist → Intent risk classifier → LLM judge. Blocks `DROP DATABASE` before it's too late. |
-| 🤖 | **Multi-Model Router (Marga)** | OpenAI · Anthropic · Sarvam AI · Ollama — routes each task to the best model automatically. |
+| 🤖 | **Multi-Model Router (Marga)** | OpenAI · Anthropic · Sarvam AI · Ollama · **OpenRouter** — routes each task to the best model automatically. |
 | 🔗 | **Agent-to-Agent (Setu)** | REST+JSON agent registry with automatic fallback. Agents calling agents calling agents. |
 | ⚡ | **Async Everything** | FastAPI + asyncpg + httpx. Sub-millisecond safety checks. Zero blocking. |
 
@@ -127,6 +128,7 @@ Add this to your agent's rules file (`.md`, `.cursorrules`, system prompt, etc.)
 ```markdown
 ## NeuroVerse Integration
 - Use `neuroverse_process` to handle any user request — it auto-detects language, extracts intent, checks safety, and executes.
+- Use `neuroverse_reason` for complex tasks requiring analytical reasoning (powered by OpenRouter).
 - Use `neuroverse_store` / `neuroverse_recall` for persistent context across sessions.
 - Use `neuroverse_execute` for any potentially dangerous action — it will block destructive operations.
 ```
@@ -465,6 +467,7 @@ def route_task(task):
 | Provider | Default Model | Best For | Cost |
 |---|---|---|---|
 | 🇮🇳 Sarvam AI | `sarvam-2b-v0.5` | Indian languages, multilingual | Low |
+| 🧩 OpenRouter | `stepfun/step-3.5-flash:free` | **High-performance reasoning** | **Free** |
 | 🧠 Anthropic | `claude-sonnet-4-20250514` | Reasoning, analysis | Medium |
 | 🤖 OpenAI | `gpt-4o` | General tasks, code | Medium |
 | 🦙 Ollama | `llama3` | Local, private, offline | Free |
@@ -482,7 +485,7 @@ def route_task(task):
 
 If your preferred provider is down or unconfigured:
 ```
-Sarvam → OpenAI → Anthropic → Ollama (local, always available)
+OpenRouter → Anthropic → OpenAI → Sarvam → Ollama (local, always available)
 ```
 
 ---
@@ -540,6 +543,7 @@ NeuroVerse exposes **6 tools** via the Model Context Protocol:
 | 6 | `neuroverse_model` | `india_mcp_model_route` | Query the multi-model router (optionally invoke) |
 | 7 | `neuroverse_transcribe` | `india_mcp_transcribe_audio` | Transcribe audio to text via Whisper STT |
 | 8 | `neuroverse_synthesize` | `india_mcp_synthesize_speech` | Synthesize speech from text via Coqui TTS |
+| 9 | `neuroverse_reason` | N/A | High-performance reasoning via OpenRouter |
 
 ### Real-World Example
 
@@ -721,6 +725,7 @@ tests/                        # 40 tests (pytest)
 | v2.0 | ✅ Done | Voice layer (Whisper/Coqui) + Extended Multilingual |
 | v3.0 | ✅ Done | Redis caching + Embedding-based semantic retrieval |
 | v4.0 | ✅ Done | Reinforcement learning (RLHF) + Arachne contextual indexing |
+| v4.1 | ✅ Done | **OpenRouter Reasoning Layer Integration** |
 | v5.0 | 🔮 Future | Agent marketplace & external system plugins |
 
 ---

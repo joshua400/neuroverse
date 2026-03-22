@@ -22,7 +22,8 @@ export declare enum ModelProvider {
     OPENAI = "openai",
     ANTHROPIC = "anthropic",
     OLLAMA = "ollama",
-    SARVAM = "sarvam"
+    SARVAM = "sarvam",
+    OPENROUTER = "openrouter"
 }
 export interface LanguageDetectionResult {
     languages: string[];

@@ -13,6 +13,7 @@ interface RouterConfig {
     openaiApiKey?: string;
     anthropicApiKey?: string;
     sarvamApiKey?: string;
+    openrouterApiKey?: string;
     ollamaBaseUrl: string;
 }
 export declare function configureRouter(cfg: Partial<RouterConfig>): void;

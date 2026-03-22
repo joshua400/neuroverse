@@ -38,6 +38,7 @@ configureRouter({
   openaiApiKey: process.env["OPENAI_API_KEY"],
   anthropicApiKey: process.env["ANTHROPIC_API_KEY"],
   sarvamApiKey: process.env["SARVAM_API_KEY"],
+  openrouterApiKey: process.env["OPENROUTER_API_KEY"],
   ollamaBaseUrl: process.env["OLLAMA_BASE_URL"] ?? "http://localhost:11434",
 });
 
@@ -539,6 +540,42 @@ server.registerTool(
     return {
       content: [{ type: "text" as const, text: JSON.stringify(chunks, null, 2) }],
     };
+  }
+);
+
+// ─── Tool 11: neuroverse_reason ─────────────────────────────────────────
+
+const ReasonSchema = z
+  .object({
+    prompt: z.string().min(1).describe("The complex prompt requiring high-performance reasoning"),
+  })
+  .strict();
+
+server.registerTool(
+  "neuroverse_reason",
+  {
+    title: "High-Performance Reason",
+    description: "Execute a complex reasoning task using specialized high-performance models (e.g. OpenRouter Reasoning). Returns the model's analytical response.",
+    inputSchema: ReasonSchema,
+    annotations: {
+      readOnlyHint: true,
+      destructiveHint: false,
+      idempotentHint: true,
+      openWorldHint: true,
+    },
+  },
+  async (params) => {
+    try {
+      const response = await callLLM(params.prompt, TaskType.REASONING);
+      return {
+        content: [{ type: "text" as const, text: response }],
+      };
+    } catch (e) {
+      return {
+        content: [{ type: "text" as const, text: `Error: ${e instanceof Error ? e.message : String(e)}` }],
+        isError: true,
+      };
+    }
   }
 );
 

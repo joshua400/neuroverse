@@ -8,6 +8,7 @@
  *   general      → best available
  */
 import axios from "axios";
+import { OpenRouter } from "@openrouter/sdk";
 import { ModelProvider, TaskType } from "../types.js";
 let config = {
     ollamaBaseUrl: "http://localhost:11434",
@@ -21,6 +22,7 @@ const DEFAULT_MODELS = {
     [ModelProvider.ANTHROPIC]: "claude-sonnet-4-20250514",
     [ModelProvider.OLLAMA]: "llama3",
     [ModelProvider.SARVAM]: "sarvam-2b-v0.5",
+    [ModelProvider.OPENROUTER]: "stepfun/step-3.5-flash:free",
 };
 // ─── Routing logic ──────────────────────────────────────────────────────
 export function routeTask(taskType) {
@@ -35,6 +37,13 @@ export function routeTask(taskType) {
         return fallbackDecision("Sarvam not configured; falling back for multilingual.");
     }
     if (taskType === TaskType.REASONING) {
+        if (config.openrouterApiKey) {
+            return {
+                provider: ModelProvider.OPENROUTER,
+                modelName: DEFAULT_MODELS[ModelProvider.OPENROUTER],
+                reason: "Reasoning task — routing to OpenRouter for specialized reasoning model.",
+            };
+        }
         if (config.anthropicApiKey) {
             return {
                 provider: ModelProvider.ANTHROPIC,
@@ -61,6 +70,9 @@ export function routeTask(taskType) {
     return fallbackDecision("General task — using best available provider.");
 }
 function fallbackDecision(reason) {
+    if (config.openrouterApiKey) {
+        return { provider: ModelProvider.OPENROUTER, modelName: DEFAULT_MODELS[ModelProvider.OPENROUTER], reason };
+    }
     if (config.openaiApiKey) {
         return { provider: ModelProvider.OPENAI, modelName: DEFAULT_MODELS[ModelProvider.OPENAI], reason };
     }
@@ -88,6 +100,8 @@ async function dispatch(prompt, decision) {
             return callSarvam(prompt, decision.modelName);
         case ModelProvider.OLLAMA:
             return callOllama(prompt, decision.modelName);
+        case ModelProvider.OPENROUTER:
+            return callOpenRouter(prompt, decision.modelName);
         default:
             throw new Error(`Unknown provider: ${decision.provider}`);
     }
@@ -114,5 +128,21 @@ async function callSarvam(prompt, model) {
 async function callOllama(prompt, model) {
     const resp = await axios.post(`${config.ollamaBaseUrl}/api/generate`, { model, prompt, stream: false }, { timeout: 120000 });
     return resp.data.response ?? "";
+}
+async function callOpenRouter(prompt, model) {
+    const or = new OpenRouter({ apiKey: config.openrouterApiKey ?? "" });
+    const response = await or.chat.send({
+        chatGenerationParams: {
+            model,
+            messages: [{ role: "user", content: prompt }],
+        },
+    });
+    const content = response.choices[0]?.message?.content ?? "";
+    // Log reasoning tokens to stderr so the user can see them in MCP logs
+    const reasoningTokens = response.usage?.completionTokensDetails?.reasoningTokens;
+    if (reasoningTokens) {
+        console.error(`[OpenRouter] Reasoning tokens: ${reasoningTokens}`);
+    }
+    return content;
 }
 //# sourceMappingURL=router.js.map

@@ -1,6 +1,6 @@
 {
   "name": "neuroverse",
-  "version": "4.0.1",
+  "version": "4.1.0",
   "description": "Multilingual intelligence + memory + safety MCP server for autonomous AI agents",
   "type": "module",
   "main": "dist/index.js",
@@ -51,6 +51,7 @@
   },
   "dependencies": {
     "@modelcontextprotocol/sdk": "^1.6.1",
+    "@openrouter/sdk": "^0.9.11",
     "axios": "^1.7.9",
     "zod": "^3.23.8"
   },

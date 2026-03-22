@@ -28,5 +28,6 @@ export var ModelProvider;
     ModelProvider["ANTHROPIC"] = "anthropic";
     ModelProvider["OLLAMA"] = "ollama";
     ModelProvider["SARVAM"] = "sarvam";
+    ModelProvider["OPENROUTER"] = "openrouter";
 })(ModelProvider || (ModelProvider = {}));
 //# sourceMappingURL=types.js.map
