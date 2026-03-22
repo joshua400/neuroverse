@@ -1,0 +1,65 @@
+/**
+ * Redis / In-Memory Cache layer for Horizontal Scaling.
+ *
+ * Uses in-memory Map by default (zero deps).
+ * If REDIS_REST_URL and REDIS_REST_TOKEN are set (e.g. Upstash),
+ * it seamlessly switches to distributed Redis over HTTP.
+ */
+import axios from "axios";
+const localCache = new Map();
+export async function setCache(key, value, options) {
+    const redisUrl = process.env["REDIS_REST_URL"];
+    const redisToken = process.env["REDIS_REST_TOKEN"];
+    if (redisUrl && redisToken) {
+        // Distributed Redis via REST
+        try {
+            let url = `${redisUrl}/set/${encodeURIComponent(key)}`;
+            if (options?.ttlSeconds) {
+                url += `/EX/${options.ttlSeconds}`;
+            }
+            await axios.post(url, typeof value === "string" ? value : JSON.stringify(value), {
+                headers: { Authorization: `Bearer ${redisToken}` },
+            });
+            return;
+        }
+        catch (e) {
+            console.warn("Redis error on set, falling back to local memory:", e);
+        }
+    }
+    // Local Memory Fallback
+    const expiry = options?.ttlSeconds ? Date.now() + options.ttlSeconds * 1000 : null;
+    localCache.set(key, { value, expiry });
+}
+export async function getCache(key) {
+    const redisUrl = process.env["REDIS_REST_URL"];
+    const redisToken = process.env["REDIS_REST_TOKEN"];
+    if (redisUrl && redisToken) {
+        try {
+            const response = await axios.get(`${redisUrl}/get/${encodeURIComponent(key)}`, {
+                headers: { Authorization: `Bearer ${redisToken}` },
+            });
+            if (response.data && response.data.result !== null) {
+                try {
+                    return JSON.parse(response.data.result);
+                }
+                catch {
+                    return response.data.result;
+                }
+            }
+            return null;
+        }
+        catch (e) {
+            console.warn("Redis error on get, falling back to local memory:", e);
+        }
+    }
+    // Local Memory Fallback
+    const record = localCache.get(key);
+    if (!record)
+        return null;
+    if (record.expiry !== null && Date.now() > record.expiry) {
+        localCache.delete(key);
+        return null;
+    }
+    return record.value;
+}
+//# sourceMappingURL=cache.js.map

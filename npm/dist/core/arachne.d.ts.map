@@ -1,0 +1,1 @@
+{"version":3,"file":"arachne.d.ts","sourceRoot":"","sources":["../../src/core/arachne.ts"],"names":[],"mappings":"AAGA,MAAM,WAAW,YAAY;IAC3B,IAAI,EAAE,MAAM,CAAC;IACb,KAAK,EAAE,MAAM,CAAC;IACd,OAAO,EAAE,MAAM,CAAC;CACjB;AAyBD,wBAAgB,eAAe,CAAC,KAAK,EAAE,MAAM,EAAE,GAAG,GAAE,MAAsB,GAAG,YAAY,EAAE,CA0B1F"}
