@@ -714,12 +714,10 @@ tests/                        # 40 tests (pytest)
 | v1.0 | ✅ Done | Tiered memory system (PostgreSQL) |
 | v1.0 | ✅ Done | 3-layer safety engine (Kavach) |
 | v1.0 | ✅ Done | Multi-model router (Marga) + Agent routing (Setu) |
-| v2.0 | 🔜 Next | Voice layer (Whisper STT + Coqui TTS) |
-| v2.0 | 🔜 Next | Kannada + Malayalam + Bengali keyword support |
-| v3.0 | 📋 Planned | Redis caching + horizontal scaling |
-| v3.0 | 📋 Planned | Embedding-based memory retrieval |
-| v4.0 | 🔮 Future | Reinforcement learning + agent marketplace |
-| v4.0 | 🔮 Future | Arachne-style code context assembly |
+| v2.0 | ✅ Done | Voice layer (Whisper/Coqui) + Extended Multilingual |
+| v3.0 | ✅ Done | Redis caching + Embedding-based semantic retrieval |
+| v4.0 | ✅ Done | Reinforcement learning (RLHF) + Arachne contextual indexing |
+| v5.0 | 🔮 Future | Agent marketplace & external system plugins |
 
 ---
 
@@ -750,7 +748,7 @@ Contributions are welcome! Here's how to get started:
 
 ```bash
 # npm edition
-git clone https://github.com/JoshuaRagilandM/neuroverse.git
+git clone https://github.com/joshua400/neuroverse.git
 cd neuroverse/npm
 npm install
 npm run build
