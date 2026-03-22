@@ -36,15 +36,15 @@
     "multi-model",
     "neuroverse"
   ],
-  "author": "Joshua Ragiland M <Joshua@Joshuaragiland.com>",
+  "author": "Joshua Ragiland M <joshuaragiland@gmail.com>",
   "license": "Apache-2.0",
-  "homepage": "https://github.com/JoshuaRagilandM/neuroverse",
+  "homepage": "https://github.com/joshua400/neuroverse",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/JoshuaRagilandM/neuroverse.git"
+    "url": "git+https://github.com/joshua400/neuroverse.git"
   },
   "bugs": {
-    "url": "https://github.com/JoshuaRagilandM/neuroverse/issues"
+    "url": "https://github.com/joshua400/neuroverse/issues"
   },
   "engines": {
     "node": ">=18"

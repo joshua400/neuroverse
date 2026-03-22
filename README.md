@@ -773,8 +773,8 @@ Apache-2.0
 
 <p align="center">
   <strong>Joshua Ragiland M</strong><br/>
-  ✉️ <a href="mailto:Joshua@Joshuaragiland.com">Joshua@Joshuaragiland.com</a><br/>
-  🌐 <a href="https://Joshuaragiland.com">Joshuaragiland.com</a>
+  ✉️ <a href="mailto:joshuaragiland@gmail.com">joshuaragiland@gmail.com</a><br/>
+  🌐 <a href="https://portfolio-joshua400s-projects.vercel.app/">Portfolio Website</a>
 </p>
 
 <p align="center">
