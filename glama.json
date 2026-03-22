@@ -1,0 +1,67 @@
+{
+  "name": "NeuroVerse",
+  "version": "4.1.1",
+  "description": "Multilingual intelligence + memory + safety MCP server for autonomous AI agents. Features Whisper STT, Coqui TTS, Redis caching, and OpenRouter reasoning.",
+  "license": "Apache-2.0",
+  "author": "Joshua Ragiland M",
+  "homepage": "https://github.com/joshua400/neuroverse",
+  "repository": "https://github.com/joshua400/neuroverse",
+  "keywords": [
+    "mcp",
+    "multilingual",
+    "safety",
+    "memory",
+    "voice",
+    "reasoning"
+  ],
+  "language": "TypeScript",
+  "runtime": "Node.js",
+  "capabilities": {
+    "prompts": true,
+    "resources": true,
+    "tools": true
+  },
+  "build": {
+    "steps": [
+      "cd npm && npm install && npm run build"
+    ],
+    "command": [
+      "node",
+      "npm/dist/index.js"
+    ]
+  },
+  "env": {
+    "properties": {
+      "OPENROUTER_API_KEY": {
+        "type": "string",
+        "description": "API key for OpenRouter (required for reasoning tasks)"
+      },
+      "OPENAI_API_KEY": {
+        "type": "string",
+        "description": "API key for OpenAI (required for GPT-4o-mini and Whisper STT)"
+      },
+      "ANTHROPIC_API_KEY": {
+        "type": "string",
+        "description": "API key for Anthropic (required for Claude 3.5 Sonnet tasks)"
+      },
+      "SARVAM_API_KEY": {
+        "type": "string",
+        "description": "API key for Sarvam AI (specialized Tamil/Hindi models)"
+      },
+      "DATABASE_URL": {
+        "type": "string",
+        "description": "PostgreSQL connection string (required for persistent memory)"
+      },
+      "REDIS_URL": {
+        "type": "string",
+        "description": "Optional Redis connection string for scaled caching"
+      },
+      "SAFETY_STRICT_MODE": {
+        "type": "string",
+        "default": "false",
+        "description": "When set to true, also blocks MEDIUM risk actions. Default: false."
+      }
+    },
+    "required": []
+  }
+}
